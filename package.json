@@ -1,0 +1,37 @@
+{
+    "name": "MMM-tns",
+    "version": "1.0.0",
+    "description": "MagicMirror module to display latest new astronomical transients such as supernova candidates",
+    "license": "MIT",
+    "main": "MMM-tns.js",
+    "scripts": {
+        "test": "./node_modules/grunt/bin/grunt",
+        "postinstall": "install-app-deps"
+    },
+    "author": "Julien Peloton",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JulienPeloton/MMM-tns"
+    },
+    "keywords": [
+        "MagicMirror",
+        "module",
+        "tns"
+    ],
+    "dependencies": {
+        "request": "^2.88.0"
+    },
+    "devDependencies": {
+        "electron-builder": "^21.2.0",
+        "electron-rebuild": "^1.8.2",
+        "grunt": "latest",
+        "grunt-eslint": "latest",
+        "grunt-jsonlint": "latest",
+        "grunt-markdownlint": "^1.0.13",
+        "grunt-stylelint": "latest",
+        "grunt-yamllint": "^0.3.0",
+        "stylelint": "^8.3.0",
+        "stylelint-config-standard": "latest",
+        "time-grunt": "latest"
+    }
+}

@@ -30,7 +30,11 @@ Module.register("MMM-tns", {
         var thead = this.createEle(table, "thead");
         var tr = this.createEle(thead, "tr");
         var helper = this;
-        this.config.columns.forEach(function(col) {
+        var headers_used = this.config.columns
+        if (this.config.withImage){
+          headers_used.push({ name: "cutouts", title: "cutouts", cssClass: "left", displayType: 'html' })
+        }
+        headers_used.forEach(function(col) {
             helper.createEle(tr, "th", null, col.title || col.name);
         });
         this.tbody = this.createEle(table, "tbody");
@@ -67,9 +71,18 @@ Module.register("MMM-tns", {
     // Trigger the query to the website (see node_helper.js)
     triggerHelper: function() {
         this.debuglog("Sending tns id=" + this.identifier + ", query=" + this.config.query);
+
+        var headers_used = this.config.columns.map(row => row.name)
+        if (this.config.withImage && !headers_used.includes('RA')) {
+          headers_used.push('RA')
+        }
+
+        if (this.config.withImage && !headers_used.includes('DEC')) {
+          headers_used.push('DEC')
+        }
         this.sendSocketNotification("tnsQuery", {
             identifier: this.identifier,
-            headers_used: this.config.columns.map(row => row.name),
+            headers_used: headers_used,
             nrows:      this.config.nrows,
             date_start: this.config.date_start,
             classified_sne: this.config.classified_sne
@@ -105,27 +118,28 @@ Module.register("MMM-tns", {
         var helper = this;
         while (parent.firstChild) parent.removeChild(parent.firstChild);
         if (rowsToAdd && rowsToAdd.length) {
-
             rowsToAdd.forEach(function(dbRow) {
                 helper.debuglog("   Adding row to table: " + JSON.stringify(dbRow, null, 2));
                 var tr = helper.createEle(parent, "tr");
-                var ra = helper.convertRADEC(dbRow['RA']);
-                var dec = helper.convertRADEC(dbRow['DEC']);
                 helper.config.columns.forEach(function(colDef) {
-                    var rawVal = dbRow[colDef.name];
-                    var displayVal = helper.formatCell(rawVal, colDef);
-                    helper.debuglog("      Col " + colDef.name + ": raw value=\"" + rawVal +
-                                    "\", display value=\"" + displayVal + "\"");
                     var td = helper.createEle(tr, "td", colDef.cssClass);
                     if (colDef.displayType == "html") {
-                        // td.innerHTML = "<img src='http://skyserver.sdss.org/dr16/SkyServerWS/ImgCutout/getjpeg?TaskName=Skyserver.Explore.Image&ra=172.591133310995&dec=14.8625695794349&scale=0.2&width=100&height=100' alt='hello'/>";
-                        var url = "<img src='http://skyserver.sdss.org/dr16/SkyServerWS/ImgCutout/getjpeg?TaskName=Skyserver.Explore.Image&ra=&dec=&scale=0.1&width=100&height=100' alt='img'/>";
-                        var urlra = helper.InsertAt(url, ra.toString(), url.indexOf('ra=')+'ra='.length)
-                        var urlradec = helper.InsertAt(urlra, dec.toString(), urlra.indexOf('dec=')+'dec='.length)
+                        var ra = helper.convertRADEC(dbRow['RA'], 'ra');
+                        var dec = helper.convertRADEC(dbRow['DEC'], 'dec');
+
+                        var url = "<img src='http://skyserver.sdss.org/dr16/SkyServerWS/ImgCutout/getjpeg?TaskName=Skyserver.Explore.Image&ra=xxxx&dec=yyyy&scale=0.6&width=50&height=50' alt='img'/>";
+                        var urlra = url.replace('xxxx', ra.toString())
+                        var urlradec = urlra.replace('yyyy', dec.toString())
+
                         td.innerHTML = urlradec;
-                        // td.style.filter = "brightness(500%)";
-                        td.style.filter = "grayscale(100%)";
+                        // Explain in README + scale
+                        // td.style.filter = "brightness(150%)";
+                        // td.style.filter = "grayscale(100%)";
                     } else {
+                        var rawVal = dbRow[colDef.name];
+                        var displayVal = helper.formatCell(rawVal, colDef);
+                        helper.debuglog("      Col " + colDef.name + ": raw value=\"" + rawVal +
+                                        "\", display value=\"" + displayVal + "\"");
                         td.innerText = displayVal;
                     }
                 });
@@ -146,11 +160,20 @@ Module.register("MMM-tns", {
       return str.slice(0,Position) + CharToInsert + str.slice(Position)
     },
 
-    // convert Ra/Dec in hh:mm:ss to degree
-    convertRADEC: function(value) {
+    // convert Ra in hh:mm:ss to degree
+    // convert Dec in deg:amin:asec to degree
+    convertRADEC: function(value, which) {
       var arr = value.replace('"', '').split(":");
-      var degree = (parseFloat(arr[0]) + parseFloat(arr[1])/60 + parseFloat(arr[2])/3600)*15;
-      return degree;
+      var degree = parseFloat(arr[0]) + parseFloat(arr[1])/60 + parseFloat(arr[2])/3600;
+
+      if (which == 'ra') {
+        return degree*15;
+      } else if (which == 'dec') {
+        return degree;
+      } else {
+        console.log('You must choose between ra and dec')
+        throw new Error();
+      }
     },
 
     // Format cellules of the table

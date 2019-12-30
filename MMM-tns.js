@@ -31,7 +31,7 @@ Module.register("MMM-tns", {
         var tr = this.createEle(thead, "tr");
         var helper = this;
         if (this.config.withImage){
-          this.config.columns.push({ name: "cutouts", title: "cutouts", cssClass: "left", displayType: 'html' })
+          this.config.columns.push({ name: "cutouts", title: "cutouts", cssClass: "left" })
         }
         this.config.columns.forEach(function(col) {
             helper.createEle(tr, "th", null, col.title || col.name);
@@ -122,7 +122,7 @@ Module.register("MMM-tns", {
                 var tr = helper.createEle(parent, "tr");
                 helper.config.columns.forEach(function(colDef) {
                     var td = helper.createEle(tr, "td", colDef.cssClass);
-                    if (colDef.displayType == "html") {
+                    if (colDef.name == "cutouts") {
                         var ra = helper.convertRADEC(dbRow['RA'], 'ra');
                         var dec = helper.convertRADEC(dbRow['DEC'], 'dec');
 

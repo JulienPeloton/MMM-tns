@@ -13,11 +13,11 @@ git clone https://github.com/JulienPeloton/MMM-tns.git
 
 ## Preview
 
-The default preview
+The default preview with cutouts:
 
 ![preview](pic/scrnsht_w_cutouts.png)
 
-Or without the cutouts:
+Note that the cutouts are empty if they cannot be found. The same without the cutouts:
 
 ![preview](pic/scrnsht_wo_cutouts.png)
 

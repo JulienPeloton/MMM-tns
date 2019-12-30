@@ -11,6 +11,13 @@ cd /path/to/MagicMirror/modules
 git clone https://github.com/JulienPeloton/MMM-tns.git
 ```
 
+You might have to install it if you do not have the request package:
+
+```
+cd /path/to/MagicMirror/modules/MMM-tns
+npm install
+```
+
 ## Preview
 
 The default preview with cutouts:

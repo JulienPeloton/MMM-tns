@@ -4,12 +4,22 @@ MMM-tns is a [MagicMirror](https://magicmirror.builders/) module to display late
 
 ## Installation
 
-You need to have MagicMirror installed first. Then go to and clone this repository:
+You need to have [MagicMirror](https://github.com/MichMich/MagicMirror) installed first. Then go to the `modules` folder and clone this repository:
 
 ```bash
 cd /path/to/MagicMirror/modules
 git clone https://github.com/JulienPeloton/MMM-tns.git
 ```
+
+## Preview
+
+The default preview
+
+![preview](pic/scrnsht_w_cutouts.png)
+
+Or without the cutouts:
+
+![preview](pic/scrnsht_wo_cutouts.png)
 
 ## Configuration
 
@@ -37,9 +47,3 @@ Edit the MagicMirror configuration file (`config/config.js`), and add a new modu
   }
 },
 ```
-
-## Preview
-
-The default preview
-
-![preview](pic/scrnsht_w_cutouts.png)

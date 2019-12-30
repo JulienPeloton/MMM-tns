@@ -36,26 +36,13 @@ module.exports = NodeHelper.create({
                 let rows = JSON.parse(helper.csvJSON(body, payload.headers_used));
 
                 // Format the JSON object and restrict the number of rows to display
-                var arrayForBrowser = helper.flattenResultSets(rows).slice(0, nrows);
+                var arrayForBrowser = rows.slice(0, nrows);
                 helper.sendSocketNotification("tns_RESULT", {
                     identifier: payload.identifier,
                     rows: arrayForBrowser
                 });
             });
         }
-    },
-
-    /* Flatten JSON object */
-    flattenResultSets: function(results) {
-      var ret = []
-
-      for(var key in results)
-          if (Array.isArray(results[key]))
-              ret = ret.concat(results[key]);
-          else
-              ret.push(results[key]);
-
-      return ret;
     },
 
     /* Convert CSV to JSON */
@@ -74,7 +61,7 @@ module.exports = NodeHelper.create({
       for(var i=1;i<lines.length;i++){
 
           var obj = {};
-          var currentline=lines[i].split(",");
+          var currentline=lines[i].split('","');
 
           // Keep only columns in headers_used
           headers_used.forEach(function (h, index) {

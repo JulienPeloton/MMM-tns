@@ -30,11 +30,10 @@ Module.register("MMM-tns", {
         var thead = this.createEle(table, "thead");
         var tr = this.createEle(thead, "tr");
         var helper = this;
-        var headers_used = this.config.columns
         if (this.config.withImage){
-          headers_used.push({ name: "cutouts", title: "cutouts", cssClass: "left", displayType: 'html' })
+          this.config.columns.push({ name: "cutouts", title: "cutouts", cssClass: "left", displayType: 'html' })
         }
-        headers_used.forEach(function(col) {
+        this.config.columns.forEach(function(col) {
             helper.createEle(tr, "th", null, col.title || col.name);
         });
         this.tbody = this.createEle(table, "tbody");
@@ -153,11 +152,6 @@ Module.register("MMM-tns", {
                 td.innerHTML = helper.config.emptyMessage;
             }
         }
-    },
-
-    // Helper to insert character inside string.
-    InsertAt: function(str,CharToInsert,Position){
-      return str.slice(0,Position) + CharToInsert + str.slice(Position)
     },
 
     // convert Ra in hh:mm:ss to degree

@@ -47,3 +47,18 @@ Edit the MagicMirror configuration file (`config/config.js`), and add a new modu
   }
 },
 ```
+
+The different options are
+
+| Name | Type | Comments |
+|:--------|:-------|:--------|
+| `header` | string | Simple text, or html to display image |
+| `nrows` | int | Number of objects to display |
+| `date_start` | string | Earliest date to start YYYY-MM-DD |
+| `classified_sne` | string | '0' is all candidates, '1' is only confirmed supernova |
+| `intervalSeconds` | int | Interval in seconds to rerun the query |
+| `emptyMessage` | string | What to display when the query returns no objects |
+| `withImage` | bool | Display cutouts or not |
+| `columns` | list of dict | Object properties to display (see below) |
+
+The available object properties are: ID, Name, Reps, Class, RA, DEC, Obj. Type, Redshift, Host Name, Host Redshift, Reporting Group/s, Discovery Data Source/s,	Classifying Group/s, Disc. Internal Name, Public, Object Spectra, Discovery Mag, Discovery Mag, Filter, Discovery Date (UT), Sender.

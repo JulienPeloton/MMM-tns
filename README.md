@@ -1,6 +1,6 @@
 # MMM-tns
 
-MMM-tns is a [MagicMirror](https://magicmirror.builders/) module to display latest new astronomical transients from [TNS](https://wis-tns.weizmann.ac.il/) such as supernova candidates.
+MMM-tns is a [MagicMirror](https://magicmirror.builders/) module to display latest new astronomical transients from [TNS](https://wis-tns.weizmann.ac.il/) such as [supernova](https://en.wikipedia.org/wiki/Supernova) candidates.
 
 ## Installation
 
@@ -45,11 +45,11 @@ Edit the MagicMirror configuration file (`config/config.js`), and add a new modu
       emptyMessage: "No data",
       withImage: true,
       columns: [
-          { name: "Name",    title: "Name", cssClass: "left" },
-          { name: "Reporting Group/s",    title: "Reporting Group/s", cssClass: "right" },
+          { name: "Name", title: "Name", cssClass: "left" },
+          { name: "Reporting Group/s", title: "Reporting Group/s", cssClass: "right" },
           { name: "Obj. Type", title: "Obj. Type", cssClass: "right" },
-          { name: "Disc. Internal Name",    title: "Disc. Internal Name", cssClass: "left" },
-          { name: "Discovery Date (UT)",    title: "Discovery Date (UT)", cssClass: "left" }
+          { name: "Disc. Internal Name", title: "Disc. Internal Name", cssClass: "left" },
+          { name: "Discovery Date (UT)", title: "Discovery Date (UT)", cssClass: "left" }
       ]
   }
 },
